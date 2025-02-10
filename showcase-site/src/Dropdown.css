@@ -1,0 +1,54 @@
+/* Dropdown container style */
+.dropdown-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: #444;
+  }
+  
+  .dropdown {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+  }
+  
+  .dropdown.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Styling for draggable components container */
+  .dropdown-content {
+    display: flex;           /* Use flexbox to layout the children side by side */
+    flex-wrap: nowrap;       /* Prevent wrapping to the next line */
+    overflow-x: auto;        /* Enable horizontal scrolling if items overflow */
+    padding-bottom: 20px;    /* Space for horizontal scroll */
+  }
+  
+  /* Styling for draggable components */
+  .draggable-component {
+    background-color: #555;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    cursor: move;
+    border-radius: 4px;
+    flex-shrink: 0;           /* Prevent shrinking, so components stay at fixed size */
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  p {
+    margin-top: 10px;
+  }
+  
