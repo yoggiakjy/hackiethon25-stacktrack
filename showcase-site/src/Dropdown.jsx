@@ -5,10 +5,19 @@ import CounterWidget from './test-widget';
 import { useDrag } from 'react-dnd'
 
 const DraggableWrapper = ({ children, type, itemData }) => {
-    // Apply `useDrag` hook to make the component draggable
+    // Get the component's display name or fallback to a default
+    const componentType = children?.type?.displayName || 
+                         children?.type?.name || 
+                         'UnknownComponent';
+  
     const [{ isDragging }, drag] = useDrag({
       type: type,
-      item: itemData,
+      item: {
+        ...itemData,
+        component: children.type, // Store the actual component type/function
+        componentType,           // Store the name for registry
+        props: children.props    // Store the component's props
+      },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -18,7 +27,7 @@ const DraggableWrapper = ({ children, type, itemData }) => {
       <div
         ref={drag}
         style={{
-          opacity: isDragging ? 0.5 : 1, // Make the element semi-transparent when dragging
+          opacity: isDragging ? 0.5 : 1,
           cursor: 'move',
         }}
       >
@@ -26,6 +35,7 @@ const DraggableWrapper = ({ children, type, itemData }) => {
       </div>
     );
   };
+
 
 const Dropdown = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -37,7 +47,7 @@ const Dropdown = () => {
     };
 
     const handleDragLeave = () => {
-      // Optionally, you can close the dropdown after a certain amount of time
+      // Doesnt do anything
     };
 
     const handleDragEnd = () => {
@@ -64,11 +74,13 @@ const Dropdown = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={`dropdown ${isHovered ? 'show' : ''}`}>
-        <h1>Drag Components</h1>
         <p>Select a component to drag and drop</p>
         
         <div className="dropdown-content">
-          <DraggableWrapper type="ITEM" itemData={{ name: 'ExistingComponent'}}><CounterWidget/></DraggableWrapper>
+            {/* TODO : Find a way to dynamically add widgets to this using same format */}
+            <DraggableWrapper type="ITEM">
+                <CounterWidget /> 
+            </DraggableWrapper>
         </div>
       </div>
     </div>
