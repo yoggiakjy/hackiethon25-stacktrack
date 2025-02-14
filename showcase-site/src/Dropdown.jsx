@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
-import CounterWidget from './test-widget';
-
 import { useDrag } from 'react-dnd'
+
+
+import CounterWidget from './test-widget';
+import StockTracker from './stock-widget';
+import WeatherWidget from './weather-widget';
 
 const DraggableWrapper = ({ children, type, itemData }) => {
     // Get the component's display name or fallback to a default
@@ -80,6 +83,14 @@ const Dropdown = () => {
             {/* TODO : Find a way to dynamically add widgets to this using same format */}
             <DraggableWrapper type="ITEM">
                 <CounterWidget /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <StockTracker /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <WeatherWidget /> 
             </DraggableWrapper>
         </div>
       </div>
