@@ -11,6 +11,7 @@ export default defineConfig({
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1"
+    "react-dnd-html5-backend": "^16.0.1",
+    "recharts": "^2.12.0"
   }
 })

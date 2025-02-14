@@ -15,6 +15,7 @@
   .dropped-component {
     position: absolute;
     transition: transform 0.2s ease;
+    z-axis:1;
   }
   
   .dropped-component:hover {
