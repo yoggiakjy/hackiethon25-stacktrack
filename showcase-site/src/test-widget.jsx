@@ -9,7 +9,7 @@ const CounterWidget = () => {
   const reset = () => setCount(0);
 
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl">
+    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg">
       <div className="text-center space-y-4">
         <h2 className="text-xl font-bold text-gray-800">Counter Widget</h2>
         
@@ -35,10 +35,10 @@ const CounterWidget = () => {
         
         <button
           onClick={reset}
-          className="flex items-center justify-center space-x-2 px-4 py-2 w-full bg-gray-400 rounded-lg hover:bg-gray-500 transition-colors"
+          className="flex items-center justify-center space-x-2 px-4 py-2 w-full bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
         >
           <RotateCcw className="w-4 h-4" />
-          <span className="text-white font-medium">Reset</span>
+          <span>Reset</span>
         </button>
       </div>
     </div>
