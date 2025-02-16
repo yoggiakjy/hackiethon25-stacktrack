@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import './DropZone.css';
+import DraggableWrapper from './DraggableWrapper';
 
 
 const DropZone = () => {
@@ -72,7 +73,7 @@ const DropZone = () => {
         console.error(`No component found for type: ${componentType}`);
         return null;
       }
-      return <Component {...props} />;
+      return <DraggableWrapper type="ITEM"><Component {...props} /></DraggableWrapper>;
     } catch (error) {
       console.error('Error rendering component:', error);
       return null;

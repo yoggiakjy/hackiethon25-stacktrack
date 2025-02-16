@@ -1,43 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
-import { useDrag } from 'react-dnd'
-
+import DraggableWrapper from './DraggableWrapper';
 
 import CounterWidget from './test-widget';
 import StockTracker from './stock-widget';
 import WeatherWidget from './weather-widget';
-
-const DraggableWrapper = ({ children, type, itemData }) => {
-    // Get the component's display name or fallback to a default
-    const componentType = children?.type?.displayName || 
-                         children?.type?.name || 
-                         'UnknownComponent';
-  
-    const [{ isDragging }, drag] = useDrag({
-      type: type,
-      item: {
-        ...itemData,
-        component: children.type, // Store the actual component type/function
-        componentType,           // Store the name for registry
-        props: children.props    // Store the component's props
-      },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    });
-  
-    return (
-      <div
-        ref={drag}
-        style={{
-          opacity: isDragging ? 0.5 : 1,
-          cursor: 'move',
-        }}
-      >
-        {children}
-      </div>
-    );
-  };
 
 
 const Dropdown = () => {
