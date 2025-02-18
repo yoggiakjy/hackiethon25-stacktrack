@@ -35,7 +35,7 @@ const CounterWidget = () => {
         
         <button
           onClick={reset}
-          className="flex items-center justify-center space-x-2 px-4 py-2 w-full bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          className="flex items-center justify-center space-x-2 px-4 py-2 w-full bg-gray-900 rounded-lg hover:bg-gray-200 transition-colors"
         >
           <RotateCcw className="w-4 h-4" />
           <span>Reset</span>
