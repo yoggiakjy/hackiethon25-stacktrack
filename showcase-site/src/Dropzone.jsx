@@ -3,7 +3,6 @@ import { useDrop } from 'react-dnd';
 import './DropZone.css';
 import DraggableWrapper from './DraggableWrapper';
 
-
 const DropZone = () => {
   const [droppedComponents, setDroppedComponents] = useState([]);
 
@@ -19,12 +18,10 @@ const DropZone = () => {
       try {
         const offset = monitor.getSourceClientOffset();
         if (!offset) return; // Guard against null offset
-
         const dropZoneEl = document.getElementById('dropzone');
         if (!dropZoneEl) return; // Guard against missing element
-
         const dropZoneRect = dropZoneEl.getBoundingClientRect();
-        
+       
         const position = {
           x: offset.x - dropZoneRect.left,
           y: offset.y - dropZoneRect.top
@@ -33,30 +30,39 @@ const DropZone = () => {
         // Log the dropped item for debugging
         console.log('Dropped item:', item);
 
-        // Ensure we have a valid component before proceeding
-        if (!item.component) {
-          console.error('No component found in dropped item');
-          return;
-        }
-
-        // Store component in registry with error handling
-        try {
-          if (!window.componentRegistry.has(item.componentType)) {
-            window.componentRegistry.set(item.componentType, item.component);
+        // Handle move vs clone behavior
+        if (item.moveType === 'move' && item.id) {
+          // Update position for existing component
+          setDroppedComponents(prev => prev.map(comp => 
+            comp.id === item.id ? { ...comp, position } : comp
+          ));
+        } else {
+          // Ensure we have a valid component before proceeding
+          if (!item.component) {
+            console.error('No component found in dropped item');
+            return;
           }
-        } catch (e) {
-          console.error('Failed to register component:', e);
-          return;
+
+          // Store component in registry with error handling
+          try {
+            if (!window.componentRegistry.has(item.componentType)) {
+              window.componentRegistry.set(item.componentType, item.component);
+            }
+          } catch (e) {
+            console.error('Failed to register component:', e);
+            return;
+          }
+
+          // Add to dropped components
+          setDroppedComponents(prev => [...prev, {
+            id: Date.now(),
+            componentType: item.componentType,
+            props: item.props || {}, // Ensure props is always an object
+            position
+          }]);
         }
 
-        // Add to dropped components
-        setDroppedComponents(prev => [...prev, {
-          id: Date.now(),
-          componentType: item.componentType,
-          props: item.props || {}, // Ensure props is always an object
-          position
-        }]);
-
+        return { dropped: true };
       } catch (error) {
         console.error('Error in drop handler:', error);
       }
@@ -66,19 +72,33 @@ const DropZone = () => {
     })
   });
 
-  const renderDroppedComponent = (componentType, props) => {
+  const renderDroppedComponent = (componentInfo) => {
     try {
-      const Component = window.componentRegistry.get(componentType);
+      const Component = window.componentRegistry.get(componentInfo.componentType);
       if (!Component) {
-        console.error(`No component found for type: ${componentType}`);
+        console.error(`No component found for type: ${componentInfo.componentType}`);
         return null;
       }
-      return <DraggableWrapper type="ITEM"><Component {...props} /></DraggableWrapper>;
+      return (
+        <DraggableWrapper 
+          type="ITEM" 
+          moveType="move"
+          itemData={{ id: componentInfo.id }}
+        >
+          <Component {...componentInfo.props} />
+        </DraggableWrapper>
+      );
     } catch (error) {
       console.error('Error rendering component:', error);
       return null;
     }
   };
+
+  const getComponentInfo = () => {
+    droppedComponents.forEach(function (value, key, map){
+      console.log(`${key}: ${value}`);
+    })
+  }
 
   return (
     <div
@@ -86,16 +106,17 @@ const DropZone = () => {
       ref={drop}
       className={`dropzone ${isOver ? 'dropzone--active' : ''}`}
     >
-      {droppedComponents.map(({ id, componentType, props, position }) => (
+      {droppedComponents.map((componentInfo) => (
         <div
-          key={id}
+          key={componentInfo.id}
           className="dropped-component"
           style={{
-            left: `${position.x}px`,
-            top: `${position.y}px`
+            left: `${componentInfo.position.x}px`,
+            top: `${componentInfo.position.y}px`
           }}
         >
-          {renderDroppedComponent(componentType, props)}
+          {renderDroppedComponent(componentInfo)}
+          {getComponentInfo()}
         </div>
       ))}
     </div>

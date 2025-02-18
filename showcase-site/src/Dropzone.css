@@ -3,7 +3,7 @@
     height: 100%;
     position: relative;
     min-height: 500px;
-    border: 2px dashed #ccc;
+    //border: 2px dashed #ccc;
     transition: all 0.2s ease;
   }
   
