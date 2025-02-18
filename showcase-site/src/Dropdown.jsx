@@ -44,8 +44,7 @@ const Dropdown = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={`dropdown ${isHovered ? 'show' : ''}`}>
-        <p>Select a component to drag and drop</p>
-        
+      
         <div className="dropdown-content">
             {/* TODO : Find a way to dynamically add widgets to this using same format */}
             <DraggableWrapper type="ITEM">
@@ -54,6 +53,22 @@ const Dropdown = () => {
 
             <DraggableWrapper type="ITEM">
                 <StockTracker /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <WeatherWidget /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <StockTracker /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <StockTracker /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <WeatherWidget /> 
             </DraggableWrapper>
 
             <DraggableWrapper type="ITEM">

@@ -5,6 +5,9 @@
     min-height: 500px;
     //border: 2px dashed #ccc;
     transition: all 0.2s ease;
+
+    margin-top:50px;
+    min-height: 500px;
   }
   
   .dropzone--active {
