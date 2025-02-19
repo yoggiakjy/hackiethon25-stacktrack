@@ -18,8 +18,7 @@ Participants will create **JavaScript widgets**, which are **customizable, reusa
    - Widgets must return **a `<div>` element** that can include attributes, event listeners, and interactivity.  
 
 2. **Widget Compatibility & Integration**  
-   - Widgets should be adaptable to work with **our sample website** or any existing site.  
-   - Participants will need to provide a **wrapper** that enables **drag-and-drop functionality** for easy placement of widgets.  
+   - Widgets should be adaptable to work with **our sample website** or any existing site.    
    - A library or detailed instructions should be provided on **how to inject widgets into websites** and enable **drag-and-drop interactions** (e.g., see Adam’s notepad widget).  
 
 3. **Evaluation Criteria**  ((Assumption))
