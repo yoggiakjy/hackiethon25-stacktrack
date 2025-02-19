@@ -13,8 +13,6 @@ function App() {
       <h1 className="text-4xl font-extrabold text-white-800">Hackiethon Widget Showcase</h1>
       <DropZone/>
     </div>
-      
-      
     </div>
   )
 }
