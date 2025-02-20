@@ -5,6 +5,7 @@ import DraggableWrapper from './DraggableWrapper';
 import CounterWidget from './test-widget';
 import StockTracker from './stock-widget';
 import WeatherWidget from './weather-widget';
+import NotepadWidget from './notepad-Component';
 
 
 const Dropdown = () => {
@@ -60,20 +61,9 @@ const Dropdown = () => {
             </DraggableWrapper>
 
             <DraggableWrapper type="ITEM">
-                <StockTracker /> 
+                <NotepadWidget />
             </DraggableWrapper>
-
-            <DraggableWrapper type="ITEM">
-                <StockTracker /> 
-            </DraggableWrapper>
-
-            <DraggableWrapper type="ITEM">
-                <WeatherWidget /> 
-            </DraggableWrapper>
-
-            <DraggableWrapper type="ITEM">
-                <WeatherWidget /> 
-            </DraggableWrapper>
+            
         </div>
       </div>
     </div>
