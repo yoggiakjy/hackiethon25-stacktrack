@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
 import DraggableWrapper from './DraggableWrapper';
 
-import CounterWidget from './test-widget';
-import StockTracker from './stock-widget';
-import WeatherWidget from './weather-widget';
-import NotepadWidget from './notepad-Component';
+import CounterWidget from './widgets/test-widget';
+import StockTracker from './widgets/stock-widget';
+import WeatherWidget from './widgets/weather-widget';
 
 
 const Dropdown = () => {
@@ -61,9 +60,20 @@ const Dropdown = () => {
             </DraggableWrapper>
 
             <DraggableWrapper type="ITEM">
-                <NotepadWidget />
+                <StockTracker /> 
             </DraggableWrapper>
-            
+
+            <DraggableWrapper type="ITEM">
+                <StockTracker /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <WeatherWidget /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <WeatherWidget /> 
+            </DraggableWrapper>
         </div>
       </div>
     </div>
