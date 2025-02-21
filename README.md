@@ -83,4 +83,24 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 
 ---
 
+Widget embedding instruction:
+1. Upload your widget as a .jsx file to the showcase website's repository under "showcase-site -> src -> widgets"
+
+2. Add an export line to the end of your widget file with the following format:
+    "export default NotepadWidget;"
+
+3. Under "showcase-site -> src", Open the "Dropdown.jsx" file and add an import line to the top of the file with the following format:
+    "import NotepadWidget from './notepad-Component';"
+    Where './notepad-Component' should be the address of your widget file
+    Note that the name of the import must match the name of the export
+
+4. Scroll to line 50 of "Dropdown.jsx" to see the draggable wrappers implemented there. Add your widget to the list of wrappers using the same format:
+    <DraggableWrapper type="ITEM">
+        <NotepadWidget /> 
+    </DraggableWrapper>
+    where "CounterWidget" should be replaced by the name of your widget previously used on import/export
+
+5. All done! Run the website and your widget should be good to go!
+
+
 This **GitHub Wiki Home Page** provides an organized structure for your **HackMelbourne Widget Challenge**. Let me know if you need modifications or additional sections! 🚀
