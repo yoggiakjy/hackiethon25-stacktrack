@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
 import DraggableWrapper from './DraggableWrapper';
 
-import CounterWidget from './test-widget';
-import StockTracker from './stock-widget';
-import WeatherWidget from './weather-widget';
+import CounterWidget from './widgets/test-widget';
+import StockTracker from './widgets/stock-widget';
+import WeatherWidget from './widgets/weather-widget';
 
 
 const Dropdown = () => {

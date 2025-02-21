@@ -16,9 +16,11 @@ Participants will create **JavaScript widgets**, which are **customizable, reusa
    - Participants will build **custom JavaScript components** (widgets).  
    - These components must be **self-contained and reusable** while maintaining a clean structure.  
    - Widgets must return **a `<div>` element** that can include attributes, event listeners, and interactivity.  
+   - Refer to the example widgets in the repo for the expected structure
 
 2. **Widget Compatibility & Integration**  
    - Widgets should be adaptable to work with **our sample website** or any existing site.    
+   - You are allowed to use external libraries
    - A library or detailed instructions should be provided on **how to inject widgets into websites** and enable **drag-and-drop interactions** (e.g., see Adam’s notepad widget).  
 
 3. **Evaluation Criteria**  ((Assumption))
@@ -48,7 +50,7 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
    - Follow the [[Widget Development Guide](Widget-Development.md)](Widget-Development.md) for best practices.  
    - Ensure your widget meets the competition criteria.  
 5. **Submit your widget**  
-   - Open a Pull Request (PR) with your widget added to the `/widgets` directory.  
+   - Submit your widget as a jsx (and any additional css or jsx files) to the devpost: 
    - Follow the [[Submission Guidelines](Submission-Guidelines.md)](Submission-Guidelines.md).  
 
 ---
