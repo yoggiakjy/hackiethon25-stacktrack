@@ -4,151 +4,123 @@ import './DropZone.css';
 import DraggableWrapper from './DraggableWrapper';
 
 const DropZone = () => {
-    const [droppedComponents, setDroppedComponents] = useState([]);
-    
-    // Initialize component registry with persistence
-    useEffect(() => {
-        if (!window.componentRegistry) {
-            window.componentRegistry = new Map();
-        }
-        // Load saved components
-        loadSavedComponents();
-    }, []);
+  const [droppedComponents, setDroppedComponents] = useState([]);
 
-    const loadSavedComponents = () => {
-        try {
-            const saved = localStorage.getItem('droppedComponents');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                setDroppedComponents(parsed.map(comp => ({
-                    ...comp,
-                    // Restore component from registry if available
-                    component: window.componentRegistry.get(comp.componentType)
-                })));
+  useEffect(() => {
+    if (!window.componentRegistry) {
+      window.componentRegistry = new Map();
+    }
+  }, []);
+
+  const [{ isOver }, drop] = useDrop({
+    accept: 'ITEM',
+    drop: (item, monitor) => {
+      try {
+        const offset = monitor.getSourceClientOffset();
+        if (!offset) return; // Guard against null offset
+        const dropZoneEl = document.getElementById('dropzone');
+        if (!dropZoneEl) return; // Guard against missing element
+        const dropZoneRect = dropZoneEl.getBoundingClientRect();
+       
+        const position = {
+          x: offset.x - dropZoneRect.left,
+          y: offset.y - dropZoneRect.top
+        };
+
+        // Log the dropped item for debugging
+        console.log('Dropped item:', item);
+
+        // Handle move vs clone behavior
+        if (item.moveType === 'move' && item.id) {
+          // Update position for existing component
+          setDroppedComponents(prev => prev.map(comp => 
+            comp.id === item.id ? { ...comp, position } : comp
+          ));
+        } else {
+          // Ensure we have a valid component before proceeding
+          if (!item.component) {
+            console.error('No component found in dropped item');
+            return;
+          }
+
+          // Store component in registry with error handling
+          try {
+            if (!window.componentRegistry.has(item.componentType)) {
+              window.componentRegistry.set(item.componentType, item.component);
             }
-        } catch (error) {
-            console.error('Error loading saved components:', error);
+          } catch (e) {
+            console.error('Failed to register component:', e);
+            return;
+          }
+
+          // Add to dropped components
+          setDroppedComponents(prev => [...prev, {
+            id: Date.now(),
+            componentType: item.componentType,
+            props: item.props || {}, // Ensure props is always an object
+            position
+          }]);
         }
-    };
 
-    const saveComponents = (components) => {
-        try {
-            const serializable = components.map(comp => ({
-                ...comp,
-                component: undefined // Don't serialize the component function
-            }));
-            localStorage.setItem('droppedComponents', JSON.stringify(serializable));
-        } catch (error) {
-            console.error('Error saving components:', error);
-        }
-    };
+        return { dropped: true };
+      } catch (error) {
+        console.error('Error in drop handler:', error);
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver()
+    })
+  });
 
-    const [{ isOver }, drop] = useDrop({
-        accept: 'ITEM',
-        drop: (item, monitor) => {
-            try {
-                const offset = monitor.getSourceClientOffset();
-                if (!offset) return;
-                
-                const dropZoneEl = document.getElementById('dropzone');
-                if (!dropZoneEl) return;
-                
-                const dropZoneRect = dropZoneEl.getBoundingClientRect();
-                const position = {
-                    x: offset.x - dropZoneRect.left,
-                    y: offset.y - dropZoneRect.top
-                };
-
-                if (item.moveType === 'move' && item.id) {
-                    setDroppedComponents(prev => {
-                        const updated = prev.map(comp => 
-                            comp.id === item.id 
-                                ? { ...comp, position }
-                                : comp
-                        );
-                        saveComponents(updated);
-                        return updated;
-                    });
-                } else {
-                    // Register new component
-                    if (!window.componentRegistry.has(item.componentType)) {
-                        window.componentRegistry.set(item.componentType, item.component);
-                    }
-
-                    const newComponent = {
-                        id: Date.now(),
-                        componentType: item.componentType,
-                        props: item.props,
-                        position,
-                        originalProps: item.originalProps
-                    };
-
-                    setDroppedComponents(prev => {
-                        const updated = [...prev, newComponent];
-                        saveComponents(updated);
-                        return updated;
-                    });
-                }
-
-                return { dropped: true };
-            } catch (error) {
-                console.error('Error handling drop:', error);
-                return { dropped: false };
-            }
-        },
-        collect: (monitor) => ({
-            isOver: monitor.isOver()
-        })
-    });
-
-    const renderDroppedComponent = (componentInfo) => {
-        try {
-            const Component = window.componentRegistry.get(componentInfo.componentType);
-            if (!Component) {
-                console.error(`Component not found: ${componentInfo.componentType}`);
-                return null;
-            }
-
-            return (
-                <DraggableWrapper
-                    key={componentInfo.id}
-                    type="ITEM"
-                    moveType="move"
-                    itemData={{
-                        id: componentInfo.id,
-                        componentType: componentInfo.componentType
-                    }}
-                >
-                    <Component {...componentInfo.originalProps || componentInfo.props} />
-                </DraggableWrapper>
-            );
-        } catch (error) {
-            console.error('Error rendering component:', error);
-            return null;
-        }
-    };
-
-    return (
-        <div
-            id="dropzone"
-            ref={drop}
-            className={`dropzone ${isOver ? 'dropzone--active' : ''}`}
+  const renderDroppedComponent = (componentInfo) => {
+    try {
+      const Component = window.componentRegistry.get(componentInfo.componentType);
+      if (!Component) {
+        console.error(`No component found for type: ${componentInfo.componentType}`);
+        return null;
+      }
+      return (
+        <DraggableWrapper 
+          type="ITEM" 
+          moveType="move"
+          itemData={{ id: componentInfo.id }}
         >
-            {droppedComponents.map((componentInfo) => (
-                <div
-                    key={componentInfo.id}
-                    className="dropped-component"
-                    style={{
-                        position: 'absolute',
-                        left: `${componentInfo.position.x}px`,
-                        top: `${componentInfo.position.y}px`
-                    }}
-                >
-                    {renderDroppedComponent(componentInfo)}
-                </div>
-            ))}
+          <Component {...componentInfo.props} />
+        </DraggableWrapper>
+      );
+    } catch (error) {
+      console.error('Error rendering component:', error);
+      return null;
+    }
+  };
+
+  const getComponentInfo = () => {
+    droppedComponents.forEach(function (value, key, map){
+      console.log(`${key}: ${value}`);
+    })
+  }
+
+  return (
+    <div
+      id="dropzone"
+      ref={drop}
+      className={`dropzone ${isOver ? 'dropzone--active' : ''}`}
+    >
+      {droppedComponents.map((componentInfo) => (
+        <div
+          key={componentInfo.id}
+          className="dropped-component"
+          style={{
+            left: `${componentInfo.position.x}px`,
+            top: `${componentInfo.position.y}px`
+          }}
+        >
+          {renderDroppedComponent(componentInfo)}
+          {getComponentInfo()}
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default DropZone;
