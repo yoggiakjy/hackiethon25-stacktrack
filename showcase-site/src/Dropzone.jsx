@@ -12,7 +12,7 @@ const DropZone = () => {
             window.componentRegistry = new Map();
         }
         // Load saved components
-        loadSavedComponents();
+        //loadSavedComponents();
     }, []);
 
     const loadSavedComponents = () => {
@@ -143,7 +143,8 @@ const DropZone = () => {
                         left: `${componentInfo.position.x}px`,
                         top: `${componentInfo.position.y}px`
                     }}
-                >
+                > 
+
                     {renderDroppedComponent(componentInfo)}
                 </div>
             ))}
