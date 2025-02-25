@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import './DropZone.css';
 import DraggableWrapper from './DraggableWrapper';
+import { initializeComponentRegistry } from './registry';
 
 const DropZone = () => {
     const [droppedComponents, setDroppedComponents] = useState([]);
     
     // Initialize component registry with persistence
     useEffect(() => {
-        if (!window.componentRegistry) {
-            window.componentRegistry = new Map();
-        }
         // Load saved components
         //loadSavedComponents();
+
+        initializeComponentRegistry();
+        // Load saved components
+        loadSavedComponents();
     }, []);
 
     const loadSavedComponents = () => {
@@ -20,11 +22,10 @@ const DropZone = () => {
             const saved = localStorage.getItem('droppedComponents');
             if (saved) {
                 const parsed = JSON.parse(saved);
-                setDroppedComponents(parsed.map(comp => ({
-                    ...comp,
-                    // Restore component from registry if available
-                    component: window.componentRegistry.get(comp.componentType)
-                })));
+                // Only set components if we have data to load
+                if (parsed && parsed.length > 0) {
+                    setDroppedComponents(parsed);
+                }
             }
         } catch (error) {
             console.error('Error loading saved components:', error);
@@ -103,7 +104,8 @@ const DropZone = () => {
 
     const renderDroppedComponent = (componentInfo) => {
         try {
-            const Component = window.componentRegistry.get(componentInfo.componentType);
+            console.log(componentInfo.componentType.toLowerCase());
+            const Component = window.componentRegistry.get(componentInfo.componentType.toLowerCase());
             if (!Component) {
                 console.error(`Component not found: ${componentInfo.componentType}`);
                 return null;

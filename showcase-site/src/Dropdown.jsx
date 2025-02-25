@@ -7,12 +7,15 @@ import StockTracker from './widgets/stock-widget';
 import WeatherWidget from './widgets/weather-widget';
 import NotepadWidget from './widgets/notepad-Component';
 
+import { COMPONENT_TYPES, initializeComponentRegistry } from './registry';
+
 
 const Dropdown = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   // This effect will listen for drag events and close the dropdown when dragging starts
   useEffect(() => {
+    initializeComponentRegistry();
     const handleDragEnter = () => {
       setIsHovered(false); // Close the dropdown when drag enters anywhere
     };

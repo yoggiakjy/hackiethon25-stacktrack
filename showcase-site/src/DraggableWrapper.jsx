@@ -19,7 +19,7 @@ const DraggableWrapper = ({ children, type, itemData, moveType = 'clone' }) => {
         item: {
             ...itemData,
             component: children.type,
-            componentType,
+            componentType: componentType || children.type.name.toLowerCase(),
             props: serializableProps,
             moveType,
             originalProps: children.props // Keep original props for reference
