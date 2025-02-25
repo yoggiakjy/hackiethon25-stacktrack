@@ -52,7 +52,7 @@ const WeatherWidget = () => {
         />
         <button
           onClick={fetchWeather}
-          className="bg-white text-white-700 px-4 py-2 rounded font-semibold shadow-md hover:bg-gray-200 transition"
+          className="bg-black text-black-900 px-4 py-2 rounded font-semibold shadow-md hover:bg-gray-200 transition"
         >
           Search
         </button>

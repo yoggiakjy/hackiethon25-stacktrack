@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import './DropZone.css';
 import DraggableWrapper from './DraggableWrapper';
-import { initializeComponentRegistry } from './registry';
+import { getComponent, initializeComponentRegistry } from './registry';
 
 const DropZone = () => {
     const [droppedComponents, setDroppedComponents] = useState([]);
     
     // Initialize component registry with persistence
     useEffect(() => {
-        // Load saved components
-        //loadSavedComponents();
 
         initializeComponentRegistry();
-        // Load saved components
+        // Load saved components -- comment line out if you want to delete on refresh
         loadSavedComponents();
     }, []);
 
@@ -104,8 +102,7 @@ const DropZone = () => {
 
     const renderDroppedComponent = (componentInfo) => {
         try {
-            console.log(componentInfo.componentType.toLowerCase());
-            const Component = window.componentRegistry.get(componentInfo.componentType.toLowerCase());
+            const Component = getComponent(componentInfo.componentType);
             if (!Component) {
                 console.error(`Component not found: ${componentInfo.componentType}`);
                 return null;

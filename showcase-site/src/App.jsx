@@ -6,7 +6,7 @@ import DropZone from './Dropzone'
 function App() {
 
   return (
-    <div className="min-h-screen bg-white-900">
+    <div className="min-h-screen bg-black-100">
     <Navbar />
     <Dropdown/>
     <div className="text-center mt-10">

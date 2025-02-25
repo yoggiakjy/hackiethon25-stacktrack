@@ -4,7 +4,7 @@ import WeatherWidget from './widgets/weather-widget';
 import NotepadWidget from './widgets/notepad-Component';
 import DropZone from './Dropzone';
 
-// Define component types as constants to avoid typos
+// Define component types as constants to avoid typos - set to all lowercase with no symbols
 export const COMPONENT_TYPES = {
   COUNTER: 'counterwidget',
   STOCK: 'stocktracker',
@@ -32,5 +32,5 @@ export const initializeComponentRegistry = () => {
 
 // Helper function to get a component by type
 export const getComponent = (type) => {
-  return window.componentRegistry.get(type);
+  return window.componentRegistry.get(type.toLowerCase());
 };
