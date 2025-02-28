@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
-import './DropZone.css';
+import './Dropzone.css';
 import DraggableWrapper from './DraggableWrapper';
 import { getComponent, initializeComponentRegistry } from './registry';
+import TrashZone from './TrashZone'; // Import the trash zone component
+
 
 const DropZone = () => {
     const [droppedComponents, setDroppedComponents] = useState([]);
-    
     // Initialize component registry with persistence
     useEffect(() => {
 
@@ -40,6 +41,14 @@ const DropZone = () => {
         } catch (error) {
             console.error('Error saving components:', error);
         }
+    };
+
+    const removeComponent = (id) => {
+        setDroppedComponents((prev) => {
+            const updated = prev.filter((comp) => comp.id !== id);
+            saveComponents(updated);
+            return updated;
+        });
     };
 
     const [{ isOver }, drop] = useDrop({
@@ -147,8 +156,11 @@ const DropZone = () => {
                     {renderDroppedComponent(componentInfo)}
                 </div>
             ))}
+            {<TrashZone onRemove={removeComponent} />}
         </div>
     );
+
+
 };
 
 export default DropZone;
