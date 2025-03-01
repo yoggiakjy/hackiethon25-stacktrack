@@ -7,12 +7,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white-900">
-    <Navbar />
-    <Dropdown/>
-    <div className="text-center mt-10">
-      <h1 className="text-4xl font-extrabold text-white-800">Hackiethon Widget Showcase</h1>
+      <Navbar />
+      <Dropdown/>
+      <div className="relative text-center mt-10">
+        <h1 className="outline-text">
+          SHOWCASE
+        </h1>
+        <h2 className="main-title">
+          Hackiethon Widget Showcase
+        </h2>
+      </div>
       <DropZone/>
-    </div>
     </div>
   )
 }
