@@ -14,7 +14,7 @@ To create this widget we would need to establish a connection to another website
 
 And so we would need to obtain the API key, to do this we would need to create an account to the source of the API, in the weather widget we are using Open Weather (https://openweathermap.org/) as our API so create an account, and click on the API tab and obtain the API Key.
 
-##2 API Request 
+## 2 API Request 
 Once we have our API Keys we need to send in the request to obtain information from the website. thefetchWeather function uses  `async()`  up establish a connection with OpenWeatherMap, it does this by making a fetch and response. We do a try catch for any errors. and inside we do a fetch (basically to send a request) and response (receiving the response and utilize information taken from it)
 
 ```
@@ -38,6 +38,6 @@ Once we have our API Keys we need to send in the request to obtain information f
   };
 ```
 
-##3 State Management
+## 3 State Management
 
 When we're fetching we also need to establish states inside the program, basically it acts as a getter and setter it stores whatever value is provided from the API 
