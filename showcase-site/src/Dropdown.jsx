@@ -11,7 +11,8 @@ import { COMPONENT_TYPES, initializeComponentRegistry } from './registry';
 
 
 const Dropdown = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered1, setIsHovered1] = useState(false);
+  const [isHovered2, setIsHovered2] = useState(false);
 
   // This effect will listen for drag events and close the dropdown when dragging starts
   useEffect(() => {
@@ -42,18 +43,46 @@ const Dropdown = () => {
   }, []);
 
   return (
-    <div 
-      className="dropdown-container"
-      onMouseEnter={() => setIsHovered(true)} 
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={`dropdown ${isHovered ? 'show' : ''}`}>
-      
-        <div className="dropdown-content">
-            {/* TODO : Find a way to dynamically add widgets to this using same format */}
-            <DraggableWrapper type="ITEM">
-                <CounterWidget /> 
-            </DraggableWrapper>
+    <div className='container-box flex w-full gap-2'>
+      <div 
+        className="dropdown-container bg-[#838383]"
+        onMouseEnter={() => setIsHovered1(true)} 
+        onMouseLeave={() => setIsHovered1(false)}
+      >
+        <div className={`dropdown ${isHovered1 ? 'show ' : ''}`}>
+        
+          <div className="dropdown-content">
+              {/* Store our widgets here */}
+              <DraggableWrapper type="ITEM">
+                  <CounterWidget /> 
+              </DraggableWrapper>
+
+              <DraggableWrapper type="ITEM">
+                  <StockTracker /> 
+              </DraggableWrapper>
+
+              <DraggableWrapper type="ITEM">
+                  <WeatherWidget /> 
+              </DraggableWrapper>
+
+              <DraggableWrapper type="ITEM">
+                  <NotepadWidget /> 
+              </DraggableWrapper>
+          </div>
+        </div>
+
+        
+      </div>
+
+      <div 
+        className="dropdown-container bg-red-800"
+        onMouseEnter={() => setIsHovered2(true)} 
+        onMouseLeave={() => setIsHovered2(false)}
+      >
+         <div className={`dropdown ${isHovered2 ? 'show -left-1/2 transform -translate-x-1/4' : '-left-1/2 transform -translate-x-1'}`}>
+        
+          <div className="dropdown-content">
+            {/* Store submission widgets here */}
 
             <DraggableWrapper type="ITEM">
                 <StockTracker /> 
@@ -63,11 +92,10 @@ const Dropdown = () => {
                 <WeatherWidget /> 
             </DraggableWrapper>
 
-            <DraggableWrapper type="ITEM">
-                <NotepadWidget /> 
-            </DraggableWrapper>
         </div>
       </div>
+      </div>
+      
     </div>
   );
 };
