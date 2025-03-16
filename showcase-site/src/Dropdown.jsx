@@ -8,6 +8,7 @@ import WeatherWidget from './widgets/weather-widget';
 import NotepadWidget from './widgets/notepad-Component';
 
 import { COMPONENT_TYPES, initializeComponentRegistry } from './registry';
+import CurrencyConverter from './decoded-widgets/currency-converter';
 
 
 const Dropdown = () => {
@@ -18,7 +19,8 @@ const Dropdown = () => {
   useEffect(() => {
     initializeComponentRegistry();
     const handleDragEnter = () => {
-      setIsHovered(false); // Close the dropdown when drag enters anywhere
+      setIsHovered1(false); // Close the dropdown when drag enters anywhere\
+      setIsHovered2(false);
     };
 
     const handleDragLeave = () => {
@@ -26,7 +28,8 @@ const Dropdown = () => {
     };
 
     const handleDragEnd = () => {
-      setIsHovered(false); // Close the dropdown after the drag ends
+      setIsHovered1(false); // Close the dropdown after the drag ends
+      setIsHovered2(false);
     };
 
     // Add event listeners for drag events
@@ -79,7 +82,7 @@ const Dropdown = () => {
         onMouseEnter={() => setIsHovered2(true)} 
         onMouseLeave={() => setIsHovered2(false)}
       >
-         <div className={`dropdown ${isHovered2 ? 'show -left-1/2 transform -translate-x-1/4' : '-left-1/2 transform -translate-x-1'}`}>
+         <div className={`dropdown ${isHovered2 ? 'show -left-1/2 transform -translate-x-1/4' : '-left-1/2 transform -translate-x-1/4'}`}>
         
           <div className="dropdown-content">
             {/* Store submission widgets here */}
@@ -91,6 +94,11 @@ const Dropdown = () => {
             <DraggableWrapper type="ITEM">
                 <WeatherWidget /> 
             </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+                <CurrencyConverter /> 
+            </DraggableWrapper>
+
 
         </div>
       </div>
