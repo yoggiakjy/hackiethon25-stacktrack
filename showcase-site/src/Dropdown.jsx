@@ -46,7 +46,7 @@ const Dropdown = () => {
   }, []);
 
   return (
-    <div className='container-box flex w-full gap-2'>
+    <div className='container-box flex w-full '>
       <div 
         className="dropdown-container bg-[#838383]"
         onMouseEnter={() => setIsHovered1(true)} 
@@ -78,7 +78,7 @@ const Dropdown = () => {
       </div>
 
       <div 
-        className="dropdown-container bg-red-800"
+        className="dropdown-container bg-green-800"
         onMouseEnter={() => setIsHovered2(true)} 
         onMouseLeave={() => setIsHovered2(false)}
       >
@@ -86,15 +86,6 @@ const Dropdown = () => {
         
           <div className="dropdown-content">
             {/* Store submission widgets here */}
-
-            <DraggableWrapper type="ITEM">
-                <StockTracker /> 
-            </DraggableWrapper>
-
-            <DraggableWrapper type="ITEM">
-                <WeatherWidget /> 
-            </DraggableWrapper>
-
             <DraggableWrapper type="ITEM">
                 <CurrencyConverter /> 
             </DraggableWrapper>
