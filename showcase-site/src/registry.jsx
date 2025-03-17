@@ -4,6 +4,7 @@ import WeatherWidget from './widgets/weather-widget';
 import NotepadWidget from './widgets/notepad-Component';
 import DropZone from './Dropzone';
 import CurrencyConverter from './decoded-widgets/currency-converter';
+import ProgressBarWidget from './decoded-widgets/progress-bar';
 
 // Define component types as constants to avoid typos - set to all lowercase with no symbols
 export const COMPONENT_TYPES = {
@@ -12,7 +13,8 @@ export const COMPONENT_TYPES = {
   WEATHER: 'weatherwidget',
   NOTEPAD: 'notepadwidget',
   DROPZONE: 'dropzone',
-  CURRENCY: 'currencyconverter'
+  CURRENCY: 'currencyconverter',
+  PROGRESSBAR: 'progressbarwidget'
 };
 
 // Initialize the component registry
@@ -28,6 +30,7 @@ export const initializeComponentRegistry = () => {
   window.componentRegistry.set(COMPONENT_TYPES.WEATHER, WeatherWidget);
   window.componentRegistry.set(COMPONENT_TYPES.NOTEPAD, NotepadWidget);
   window.componentRegistry.set(COMPONENT_TYPES.CURRENCY, CurrencyConverter);
+  window.componentRegistry.set(COMPONENT_TYPES.PROGRESSBAR, ProgressBarWidget);
   
   
   console.log('Component registry initialized with all widgets');

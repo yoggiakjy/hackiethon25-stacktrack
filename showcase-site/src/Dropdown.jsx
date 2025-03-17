@@ -9,6 +9,7 @@ import NotepadWidget from './widgets/notepad-Component';
 
 import { COMPONENT_TYPES, initializeComponentRegistry } from './registry';
 import CurrencyConverter from './decoded-widgets/currency-converter';
+import ProgressBarWidget from './decoded-widgets/progress-bar';
 
 
 const Dropdown = () => {
@@ -88,6 +89,10 @@ const Dropdown = () => {
             {/* Store submission widgets here */}
             <DraggableWrapper type="ITEM">
                 <CurrencyConverter /> 
+            </DraggableWrapper>
+
+            <DraggableWrapper type="ITEM">
+              <ProgressBarWidget />
             </DraggableWrapper>
 
 

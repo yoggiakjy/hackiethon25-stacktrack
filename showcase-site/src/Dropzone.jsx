@@ -112,6 +112,7 @@ const DropZone = () => {
     const renderDroppedComponent = (componentInfo) => {
         try {
             const Component = getComponent(componentInfo.componentType);
+            console.log(componentInfo)
             if (!Component) {
                 console.error(`Component not found: ${componentInfo.componentType}`);
                 return null;
