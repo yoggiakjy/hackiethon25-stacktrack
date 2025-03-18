@@ -1,28 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
 import DraggableWrapper from './DraggableWrapper';
-
-import CounterWidget from './widgets/test-widget';
-import StockTracker from './widgets/stock-widget';
-import WeatherWidget from './widgets/weather-widget';
-import NotepadWidget from './widgets/notepad-Component';
-
-import { COMPONENT_TYPES, initializeComponentRegistry } from './registry';
-import CurrencyConverter from './decoded-widgets/currency-converter';
-import ProgressBarWidget from './decoded-widgets/progress-bar';
+import { initializeComponentRegistry } from './registry';
 
 
 const Dropdown = () => {
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
+  const [mainWidgets, setMainWidgets] = useState([]);
+  const [submissionWidgets, setSubmissionWidgets] = useState([]);
 
   // This effect will listen for drag events and close the dropdown when dragging starts
   useEffect(() => {
-    initializeComponentRegistry();
+
+    const setup = async () => {
+      // Initialize the component registry -- async to avoid init errors : TODO skip error-causing widgets
+      await initializeComponentRegistry();
+      
+      // NOTE: USE LITERALS AND NOT VARIABLES FOR PATH NAME -- UPDATE IF FOLDER NAME CHANGES
+      try {
+        // Import all widgets from the main widgets folder
+        const mainWidgetsModules = import.meta.glob('./widgets/*.jsx', { eager: true });
+        const mainWidgetComponents = Object.entries(mainWidgetsModules).map(([path, module]) => {
+          const componentName = path.split('/').pop().replace(/\.jsx$/, '');
+          return {
+            Component: module.default,
+            key: componentName
+          };
+        });
+        setMainWidgets(mainWidgetComponents);
+        
+        // Import all widgets from the submission widgets folder
+        const submissionWidgetsModules = import.meta.glob('./submission-widgets/*.jsx', { eager: true });
+        const submissionWidgetComponents = Object.entries(submissionWidgetsModules).map(([path, module]) => {
+          const componentName = path.split('/').pop().replace(/\.jsx$/, '');
+          return {
+            Component: module.default,
+            key: componentName
+          };
+        });
+        setSubmissionWidgets(submissionWidgetComponents);
+      } catch (error) {
+        console.error('Error importing widgets:', error);
+      }
+    }
+
+    setup()
     const handleDragEnter = () => {
       setIsHovered1(false); // Close the dropdown when drag enters anywhere\
       setIsHovered2(false);
     };
+    
 
     const handleDragLeave = () => {
       // Doesnt do anything
@@ -48,58 +76,39 @@ const Dropdown = () => {
 
   return (
     <div className='container-box flex w-full '>
-      <div 
+      <div
         className="dropdown-container bg-[#838383]"
-        onMouseEnter={() => setIsHovered1(true)} 
+        onMouseEnter={() => setIsHovered1(true)}
         onMouseLeave={() => setIsHovered1(false)}
       >
         <div className={`dropdown ${isHovered1 ? 'show ' : ''}`}>
-        
           <div className="dropdown-content">
-              {/* Store our widgets here */}
-              <DraggableWrapper type="ITEM">
-                  <CounterWidget /> 
+            {/* Loop through the main widgets */}
+            {mainWidgets.map(({ Component, key }) => (
+              <DraggableWrapper key={key} type="ITEM">
+                <Component />
               </DraggableWrapper>
-
-              <DraggableWrapper type="ITEM">
-                  <StockTracker /> 
-              </DraggableWrapper>
-
-              <DraggableWrapper type="ITEM">
-                  <WeatherWidget /> 
-              </DraggableWrapper>
-
-              <DraggableWrapper type="ITEM">
-                  <NotepadWidget /> 
-              </DraggableWrapper>
+            ))}
           </div>
         </div>
-
-        
-      </div>
-
-      <div 
-        className="dropdown-container bg-green-800"
-        onMouseEnter={() => setIsHovered2(true)} 
-        onMouseLeave={() => setIsHovered2(false)}
-      >
-         <div className={`dropdown ${isHovered2 ? 'show -left-1/2 transform -translate-x-1/4' : '-left-1/2 transform -translate-x-1/4'}`}>
-        
-          <div className="dropdown-content">
-            {/* Store submission widgets here */}
-            <DraggableWrapper type="ITEM">
-                <CurrencyConverter /> 
-            </DraggableWrapper>
-
-            <DraggableWrapper type="ITEM">
-              <ProgressBarWidget />
-            </DraggableWrapper>
-
-
-        </div>
-      </div>
       </div>
       
+      <div
+        className="dropdown-container bg-green-800"
+        onMouseEnter={() => setIsHovered2(true)}
+        onMouseLeave={() => setIsHovered2(false)}
+      >
+        <div className={`dropdown ${isHovered2 ? 'show -left-1/2 transform -translate-x-1/4' : '-left-1/2 transform -translate-x-1/4'}`}>
+          <div className="dropdown-content">
+            {/* Loop through the submission widgets */}
+            {submissionWidgets.map(({ Component, key }) => (
+              <DraggableWrapper key={key} type="ITEM">
+                <Component />
+              </DraggableWrapper>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

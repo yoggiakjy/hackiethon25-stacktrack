@@ -1,42 +1,38 @@
-import CounterWidget from './widgets/test-widget';
-import StockTracker from './widgets/stock-widget';
-import WeatherWidget from './widgets/weather-widget';
-import NotepadWidget from './widgets/notepad-Component';
-import DropZone from './Dropzone';
-import CurrencyConverter from './decoded-widgets/currency-converter';
-import ProgressBarWidget from './decoded-widgets/progress-bar';
-
-// Define component types as constants to avoid typos - set to all lowercase with no symbols
-export const COMPONENT_TYPES = {
-  COUNTER: 'counterwidget',
-  STOCK: 'stocktracker',
-  WEATHER: 'weatherwidget',
-  NOTEPAD: 'notepadwidget',
-  DROPZONE: 'dropzone',
-  CURRENCY: 'currencyconverter',
-  PROGRESSBAR: 'progressbarwidget'
-};
-
-// Initialize the component registry
-export const initializeComponentRegistry = () => {
+export const initializeComponentRegistry = async () => {
   if (!window.componentRegistry) {
     window.componentRegistry = new Map();
   }
   
-  // Register all available components
-  window.componentRegistry.set(COMPONENT_TYPES.DROPZONE, DropZone);
-  window.componentRegistry.set(COMPONENT_TYPES.COUNTER, CounterWidget);
-  window.componentRegistry.set(COMPONENT_TYPES.STOCK, StockTracker);
-  window.componentRegistry.set(COMPONENT_TYPES.WEATHER, WeatherWidget);
-  window.componentRegistry.set(COMPONENT_TYPES.NOTEPAD, NotepadWidget);
-  window.componentRegistry.set(COMPONENT_TYPES.CURRENCY, CurrencyConverter);
-  window.componentRegistry.set(COMPONENT_TYPES.PROGRESSBAR, ProgressBarWidget);
-  
-  
-  console.log('Component registry initialized with all widgets');
+  try {
+    // Import widgets from the main widgets folder using Vite's import.meta.glob
+    const mainWidgetsModules = import.meta.glob('./widgets/*.jsx', { eager: true });
+    Object.entries(mainWidgetsModules).forEach(([path, module]) => {
+      const component = module.default;
+      console.log(component);
+      const componentName = component.name
+      
+      // Add to registry
+      window.componentRegistry.set(componentName.toUpperCase(), component);
+    });
+    
+    // Import widgets from the submission widgets folder
+    const submissionWidgetsModules = import.meta.glob('./submission-widgets/*.jsx', { eager: true });
+    Object.entries(submissionWidgetsModules).forEach(([path, module]) => {
+      const component = module.default;
+      const componentName = component.name;
+      // Add to registry
+      window.componentRegistry.set(componentName.toUpperCase(), component);
+    });
+    
+    console.log('Available components:', Array.from(window.componentRegistry.keys()));
+  } catch (error) {
+    console.error('Error with dynamic imports:', error);
+  }
 };
 
 // Helper function to get a component by type
 export const getComponent = (type) => {
-  return window.componentRegistry.get(type.toLowerCase());
+  return window.componentRegistry.get(type.toUpperCase());
 };
+
+
