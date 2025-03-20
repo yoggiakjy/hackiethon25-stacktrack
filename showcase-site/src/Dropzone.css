@@ -2,11 +2,12 @@
     width: 100%;
     height: 100%;
     position: relative;
-    //border: 2px dashed #ccc;
     transition: all 0.2s ease;
 
     margin-top:50px;
     min-height: 90vh;
+
+    z-index:100
   }
   
   .dropzone--active {
@@ -17,7 +18,6 @@
   .dropped-component {
     position: absolute;
     transition: transform 0.2s ease;
-    z-axis:1;
   }
   
   .dropped-component:hover {
