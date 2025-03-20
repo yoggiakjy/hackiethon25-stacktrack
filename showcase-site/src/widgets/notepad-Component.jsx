@@ -10,7 +10,7 @@ const NotepadWidget = () => {
   }, [notes]);
 
   return (
-    <div className="relative left-55 top-45">
+    <div className="mx-auto left-55 top-45">
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}

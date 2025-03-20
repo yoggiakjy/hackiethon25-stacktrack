@@ -14,7 +14,7 @@ const TrashZone = ({ onRemove }) => {
 
     return (
         <div ref={drop} className={`trash-zone ${isOver ? 'trash-zone--active' : ''}`}>
-            Drag here to remove
+            
         </div>
     );
 };
