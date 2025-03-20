@@ -5,15 +5,15 @@ import DropZone from './Dropzone'
 
 function App() {
 
-  let bgUrl = "https://gamepress.gg";
-  if (bgUrl){
+  // Paste your desired website here, in full https form without the "/" at the end
+  // NOTE: not all websites work. Websites protected under CSP cannot be embedded
+  let MyUrl = "https://hack.melbourne";
+  if (MyUrl){
     return (
       <div className="App">
         <div className="min-h-screen bg-white-900">
           <Navbar />
-          <DropZone/>
-          
-          
+          <DropZone url={MyUrl}/>
         </div>
       </div>
     )
@@ -23,7 +23,6 @@ function App() {
     <div className="App">
       <div className="min-h-screen bg-white-900">
         <Navbar />
-        <Dropdown/>
         <div className="relative text-center mt-10">
           <h1 className="outline-text">
             SHOWCASE

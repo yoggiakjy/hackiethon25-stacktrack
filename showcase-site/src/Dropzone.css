@@ -13,12 +13,14 @@
   .dropzone--active {
     background-color: rgba(59, 130, 246, 0.1);
     border-color: #3b82f6;
+    z-index: 5;
     
   }
   
   .dropped-component {
     position: absolute;
     transition: transform 0.2s ease;
+    z-index: 5;
   }
   
   .dropped-component:hover {

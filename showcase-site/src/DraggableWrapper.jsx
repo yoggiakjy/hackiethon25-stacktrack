@@ -31,12 +31,18 @@ const DraggableWrapper = ({ children, type, itemData, moveType = 'clone' }) => {
     });
 
     return (
-        <div className="border-2 border-dotted flex-none"
+        <div
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
-                display: (isDragging && moveType === 'move') ? 'none' : 'block'
+                display: (isDragging && moveType === 'move') ? 'none' : 'block',
+                boxSizing: 'content-box',
+                position: 'relative',
+                width: 'max-content',
+                height: 'max-content',
+                overflow: 'visible', 
+                flex: 'none'
             }}
         >
             {children}
