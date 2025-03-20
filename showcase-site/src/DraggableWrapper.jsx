@@ -26,11 +26,12 @@ const DraggableWrapper = ({ children, type, itemData, moveType = 'clone' }) => {
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
-        })
+        }), 
+        
     });
 
     return (
-        <div 
+        <div className="border-2 border-dotted flex-none"
             ref={drag}
             style={{
                 opacity: isDragging ? 0.5 : 1,

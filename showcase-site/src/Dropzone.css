@@ -7,12 +7,13 @@
     margin-top:50px;
     min-height: 90vh;
 
-    z-index:100
+    z-index:5;
   }
   
   .dropzone--active {
     background-color: rgba(59, 130, 246, 0.1);
     border-color: #3b82f6;
+    
   }
   
   .dropped-component {
