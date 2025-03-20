@@ -12,17 +12,15 @@ function App() {
   if (MyUrl){
     return (
       <div className="App">
-        <div className="min-h-screen bg-white-900">
-          <Navbar />
-          <DropZone url={MyUrl}/>
-        </div>
+        <Navbar />
+        <DropZone url={MyUrl}/>
       </div>
     )
   }
 
+
   return (
-    <div className="App">
-      <div className="min-h-screen bg-white-900">
+    <div className="App" style={{ backgroundImage: 'url(/stars.png)', height: '100vh' }}>
         <Navbar />
         <div className="relative text-center mt-10">
           <h1 className="outline-text">
@@ -33,7 +31,6 @@ function App() {
           </h2>
         </div>
         <DropZone/>
-      </div>
     </div>
   )
 }
