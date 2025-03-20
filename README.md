@@ -65,6 +65,7 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 5. **Submit your widget**
    - Submit your widget as a jsx (and any additional css, jsx or image files) to the devpost:
    - Follow the [[Submission Guidelines](Submission-Guidelines.md)](Submission-Guidelines.md).
+   - Make sure to test it on the showcase site first -- this is where we'll be primarily juding your widget
 
 ---
 
