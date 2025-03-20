@@ -26,7 +26,6 @@ Participants will create **JavaScript widgets**, which are **customizable, reusa
 
    - Widgets should be adaptable to work with **our sample website** or any existing site.
    - You are allowed to use external libraries
-   - A library or detailed instructions should be provided on **how to inject widgets into websites** and enable **drag-and-drop interactions** (e.g., see Adam’s notepad widget).
 
 3. **Evaluation Criteria** ((Assumption))
    - **Functionality**: Does the widget work as expected?
@@ -43,7 +42,7 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 1. **Clone the repository**
    ```sh
    git clone https://github.com/HackMelbourne/widget-challenge.git
-   cd widget-challenge
+   cd showcase-site
    ```
 2. **Install dependencies (if applicable)**
    ```sh
@@ -61,10 +60,10 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
    delete node_modules, run npm install and npm run dev again
 
 4. **Develop your widget**
-   - Follow the [[Widget Development Guide](Widget-Development.md)](Widget-Development.md) for best practices.
+   - Follow the [[Example Widget Development Guide](Widget-Development.md)](Widget-Development.md) for best practices.
    - Ensure your widget meets the competition criteria.
 5. **Submit your widget**
-   - Submit your widget as a jsx (and any additional css or jsx files) to the devpost:
+   - Submit your widget as a jsx (and any additional css, jsx or image files) to the devpost:
    - Follow the [[Submission Guidelines](Submission-Guidelines.md)](Submission-Guidelines.md).
 
 ---
@@ -72,13 +71,14 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 ## 📂 Repository Structure
 
 ```plaintext
-/widget-challenge
-│── /widgets              # Directory for submitted widgets
+/src                      # Main source code of project
+│── /widgets              # Directory for sample widgets
+│── /submission-widgets   # Place your widget and extra files here
 │── /docs                 # Documentation and guidelines
 │── /src                  # Main source code of the project
-│── /public               # Static assets
+│── /assets               # Some assets
 │── package.json          # Project dependencies
-│── README.md             # Project overview
+│── Widget-Development.md # Sample widget development
 ```
 
 ---
@@ -87,7 +87,7 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 
 - Read the **[[Widget Development Guide]()](Widget-Development.md)** before starting.
 - Make sure your widget is **modular, functional, and follows best practices**.
-- Submit your code via a **Pull Request** with a clear description.
+- Submit your code via the DevPost page.
 - Follow the **[[Code of Conduct]()](Code-of-Conduct.md)** and be respectful to other participants.
 
 ---
@@ -102,33 +102,6 @@ To participate in the HackMelbourne Widget Challenge, follow these steps:
 
 ## Widget embedding instruction:
 
-1. Upload your widget as a .jsx file to the showcase website's repository under "showcase-site -> src -> widgets"
-
-2. Add an export line to the end of your widget file with the following format:
-
-   ```jsx
-   export default NotepadWidget;
-   ```
-
-3. Under "showcase-site -> src", Open the "Dropdown.jsx" file and add an import line to the top of the file with the following format:
-
-   ```jsx
-   import NotepadWidget from "./notepad-Component";
-   ```
-
-   Where './notepad-Component' should be the address of your widget file.  
-   Note that the name of the import must match the name of the export.
-
-4. Scroll to line 50 of "Dropdown.jsx" to see the draggable wrappers implemented there. Add your widget to the list of wrappers using the same format:
-
-   ```jsx
-   <DraggableWrapper type="ITEM">
-     <NotepadWidget />
-   </DraggableWrapper>
-   ```
-
-   where "CounterWidget" should be replaced by the name of your widget previously used on import/export.
-
-5. All done! Run the website and your widget should be good to go!
+1. Just upload into the submissions-widgets directory. It should automatically render if no issues show up.
 
 This **GitHub Wiki Home Page** provides an organized structure for your **HackMelbourne Widget Challenge**. Let me know if you need modifications or additional sections! 🚀
