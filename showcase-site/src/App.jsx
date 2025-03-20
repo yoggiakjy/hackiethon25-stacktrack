@@ -8,6 +8,7 @@ function App() {
   // Paste your desired website here, in full https form without the "/" at the end
   // NOTE: not all websites work. Websites protected under CSP cannot be embedded
   let MyUrl = "https://hack.melbourne";
+  MyUrl = "";
   if (MyUrl){
     return (
       <div className="App">

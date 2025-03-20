@@ -77,7 +77,7 @@ const Dropdown = () => {
   return (
     <div className='container-box flex w-full '>
       <div
-        className="dropdown-container bg-[#838383]"
+        className="dropdown-container bg-gradient-to-r to-[#003f92] from-blue-300"
         onMouseEnter={() => setIsHovered1(true)}
         onMouseLeave={() => setIsHovered1(false)}
       >
@@ -94,7 +94,7 @@ const Dropdown = () => {
       </div>
       
       <div
-        className="dropdown-container bg-green-800"
+        className="dropdown-container bg-gradient-to-r to-[#9a6dc8] from-purple-900"
         onMouseEnter={() => setIsHovered2(true)}
         onMouseLeave={() => setIsHovered2(false)}
       >
