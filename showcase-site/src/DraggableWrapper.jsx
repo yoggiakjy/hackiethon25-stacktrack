@@ -32,21 +32,25 @@ const DraggableWrapper = ({ children, type, itemData, moveType = 'clone' }) => {
 
     return (
         <div
-            ref={drag}
-            style={{
-                opacity: isDragging ? 0.5 : 1,
-                cursor: 'move',
-                display: (isDragging && moveType === 'move') ? 'none' : 'block',
-                boxSizing: 'content-box',
-                position: 'relative',
-                width: 'max-content',
-                height: 'max-content',
-                overflow: 'visible', 
-                flex: 'none'
-            }}
-        >
-            {children}
-        </div>
+    ref={drag}
+    style={{
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'move',
+        display: (isDragging && moveType === 'move') ? 'none' : 'block',
+        boxSizing: 'border-box',
+        position: 'relative',
+        width: 'fit-content',
+        height: 'fit-content',
+        overflow: 'visible',
+        flex: 'none',
+        // Add dotted border
+        border: '2px dotted #000',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }}
+>
+    {children}
+</div>
     );
 };
 
