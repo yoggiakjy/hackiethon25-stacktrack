@@ -113,11 +113,11 @@ To prepare your environment, follow these steps:
       so there is no need to restart the server (unless something crashes) 
 
 5. **Develop your widget**
-   - Follow the [[Example Widget Development Guide](showcase-site/Widget-Development.md)](Widget-Development.md) for learning how to develop a widget with API calls.
+   - Follow the [[Example Widget Development Guide](showcase-site/docs/Widget-Development.md)](Widget-Development.md) for learning how to develop a widget with API calls.
    - Ensure your widget meets the competition criteria.
 6. **Submit your widget**
    - Submit your widget as a jsx (and any additional css, jsx or image files) to the devpost:
-   - Follow the [[Submission Guidelines](showcase-site/Submission-Guidelines.md)](Submission-Guidelines.md).
+   - Follow the [[Submission Guidelines](showcase-site/docs/Submission-Guidelines.md)](Submission-Guidelines.md).
    - Make sure to test it on the showcase site first -- this is where we'll be primarily juding your widget
 
 ---
