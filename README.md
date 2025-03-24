@@ -66,7 +66,7 @@ To prepare your environment, follow these steps:
 
    or, by using CLI command,
    ```sh
-   git clone https://github.com/HackMelbourne/Hackiethon2025.git
+   gh repo clone HackMelbourne/Hackiethon25
    ```
 2. **Install dependencies (if applicable)**
    (Step 2a)
