@@ -117,7 +117,7 @@ To prepare your environment, follow these steps:
    - Ensure your widget meets the competition criteria.
 6. **Submit your widget**
    - Submit your widget as a jsx (and any additional css, jsx or image files) to the devpost:
-   - Follow the [[Submission Guidelines](showcase=site/Submission-Guidelines.md)](Submission-Guidelines.md).
+   - Follow the [[Submission Guidelines](showcase-site/Submission-Guidelines.md)](Submission-Guidelines.md).
    - Make sure to test it on the showcase site first -- this is where we'll be primarily juding your widget
 
 ---
