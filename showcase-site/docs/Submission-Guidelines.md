@@ -31,6 +31,8 @@ const MyWidget = () => {
 A template will be provided in src/submission-widgets/
 
 Expected directory structure:
+
+```
 /src                            # Main source code of project
 │── /submission-widgets         # Place your widget and extra files here
     │── MyWidget.jsx            # Your widget file
@@ -39,7 +41,7 @@ Expected directory structure:
         │── logo.svg
         │── etc
     │── MyWidget.css            # Your widget's CSS, if needed
-
+```
 
 **We highly recommend using TailwindCSS for styling your component, and discourage using CSS files, due to naming clashes in CSS classes.**
 
