@@ -2,6 +2,7 @@ How to format your code:
 
 Ensure that your React (jsx) file follows this structure:
 
+```
 # imports, such as...
 import ... from ...
 
@@ -26,7 +27,7 @@ const MyWidget = () => {
   # default export so that your widget can automatically render -- ensure that the name matches your widget name
   export default MyWidget;
 }
-
+```
 A template will be provided in src/submission-widgets/
 
 Expected directory structure:
