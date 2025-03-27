@@ -62,7 +62,7 @@ To prepare your environment, follow these steps:
 1. **Clone the repository**
    (RECOMMENDED)
    - Make sure you have the GitHub Desktop app installed
-   - In the Hackiethon2025 GitHub page (https://github.com/HackMelbourne/Hackiethon25), clone the repository by opening it in GitHub Desktop
+   - In the [Hackiethon2025 GitHub page](https://github.com/HackMelbourne/Hackiethon25), clone the repository by opening it in GitHub Desktop
 
    or, by using CLI command,
    ```sh
@@ -113,11 +113,11 @@ To prepare your environment, follow these steps:
       so there is no need to restart the server (unless something crashes) 
 
 5. **Develop your widget**
-   - Follow the [[Example Widget Development Guide](showcase-site/docs/Widget-Development.md)](Widget-Development.md) for learning how to develop a widget with API calls.
+   - Follow the [[Example Widget Development Guide](https://github.com/HackMelbourne/Hackiethon25/blob/32ceb5a89d0af82571ef10e10c98a2076a9dd2c2/showcase-site/docs/Widget-Development.md)] for learning how to develop a widget with API calls.
    - Ensure your widget meets the competition criteria.
 6. **Submit your widget**
    - Submit your widget as a jsx (and any additional css, jsx or image files) to the devpost:
-   - Follow the [[Submission Guidelines](showcase-site/docs/Submission-Guidelines.md)](Submission-Guidelines.md).
+   - Follow the [[Submission Guidelines](https://github.com/HackMelbourne/Hackiethon25/blob/32ceb5a89d0af82571ef10e10c98a2076a9dd2c2/showcase-site/docs/Submission-Guidelines.md)].
    - Make sure to test it on the showcase site first -- this is where we'll be primarily juding your widget
 
 ---
@@ -140,10 +140,10 @@ For the most part, you should only be writing code + adding files into the "show
 
 ## 🚀 Additional Resources
 
-- **[[Widget Development Guide]()](Widget-Development.md)** – Learn how to structure and build your widget based on this example widget.
-- **[[Submission Guidelines]()](Submission-Guidelines.md)** – Instructions on how to submit your widget and overall expected structure.
-- **[[Decoded Notion Page].().] https://plum-soda-d5f.notion.site/Decoded-1bc996f226c88037a95dc1222f53a1a1** – Resources from Decoded.
-
+- **[Widget Development Guide](https://github.com/HackMelbourne/Hackiethon25/blob/32ceb5a89d0af82571ef10e10c98a2076a9dd2c2/showcase-site/docs/Widget-Development.md)** – Learn how to structure and build your widget based on this example widget.
+- **[Submission Guidelines](https://github.com/HackMelbourne/Hackiethon25/blob/32ceb5a89d0af82571ef10e10c98a2076a9dd2c2/showcase-site/docs/Submission-Guidelines.md)** – Instructions on how to submit your widget and overall expected structure.
+- **[Decoded Notion Page](https://plum-soda-d5f.notion.site/Decoded-1bc996f226c88037a95dc1222f53a1a1)** – Resources from Decoded.
+- **[Showcase Site Tutorial](https://github.com/HackMelbourne/Hackiethon25/blob/main/showcase-site/docs/Showcase-Site.md)** - Instructions on how to use the showcase site
 ---
 
 ## Widget embedding instruction:
@@ -151,4 +151,4 @@ For the most part, you should only be writing code + adding files into the "show
 1. Just upload into the submissions-widgets directory. It should automatically render if no issues show up.
 2. If there are rendering issues, the localhost server should be blank. Right click on the page, go to Inspect Element, and errors can be debugged via the error messages
 3. If there are still errors, please feel free to reach out in our official discord (hack.melbourne/discord)
-4. To check how your widget is rendered on the page, and how to use the showcase site, check [showcase-site/docs/Showcase-Site.md]
+4. To check how your widget is rendered on the page, and how to use the showcase site, check [Showcase Site Tutorial](https://github.com/HackMelbourne/Hackiethon25/blob/main/showcase-site/docs/Showcase-Site.md)
