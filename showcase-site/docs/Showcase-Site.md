@@ -1,5 +1,9 @@
 # How to use the showcase site
 
+## Watch this tutorial:
+[![Watch the video](https://img.youtube.com/vi/kgKMVLG54bQ/hqdefault.jpg)](https://youtu.be/kgKMVLG54bQ)
+
+## Or, use these
 First, run this command with your terminal open in "showcase-site"
 ``` ssh
 npm run dev
@@ -24,6 +28,7 @@ You can change the background website to any of your choosing, by:
 - Changing the website in line 10 to any website link
 - Note: some websites won't work due to CSP protections
   - ![Full Showcase](https://github.com/HackMelbourne/Hackiethon25/blob/d641575faedee4c85f1fea4ffe5cc9d5b120dc64/showcase-site/screenshots/fullShowcase.png)
+
 
 
 
