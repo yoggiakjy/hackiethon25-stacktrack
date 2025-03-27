@@ -12,7 +12,7 @@ const NotepadWidget = () => {
   return (
     <div className="relative mx-auto w-full max-w-[900px]">
   {/* Container with pointer-events-none to allow clicking through */}
-  <div className="relative flex flex-col w-64 h-48 border-2 border-dotted border-gray-300 pointer-events-none">
+  <div className="relative flex flex-col w-64 h-48 pointer-events-none">
     {/* Notepad - restore pointer events when visible */}
     <div 
       className={`relative top-0 right-0 w-full h-40 bg-white rounded-lg shadow-xl p-3 flex flex-col transition-opacity duration-200 ${

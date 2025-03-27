@@ -44,7 +44,7 @@ const DraggableWrapper = ({ children, type, itemData, moveType = 'clone' }) => {
         overflow: 'visible',
         flex: 'none',
         // Add dotted border
-        border: '2px dotted #000',
+        //border: '2px dotted #000',
         justifyContent: 'center',
         alignItems: 'center'
     }}
