@@ -151,4 +151,4 @@ For the most part, you should only be writing code + adding files into the "show
 1. Just upload into the submissions-widgets directory. It should automatically render if no issues show up.
 2. If there are rendering issues, the localhost server should be blank. Right click on the page, go to Inspect Element, and errors can be debugged via the error messages
 3. If there are still errors, please feel free to reach out in our official discord (hack.melbourne/discord)
-4. To check how your widget is rendered on the page, and how to use the showcase site, check [showcase-site\docs\Showcase-Site.md]
+4. To check how your widget is rendered on the page, and how to use the showcase site, check [showcase-site/docs/Showcase-Site.md]
