@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MyWidget.css";
 import InvestmentModal from "./components/InvestmentModal";
 import bankIcon from "./assets/bank.png";
@@ -6,15 +6,18 @@ import cryptoIcon from "./assets/crypto.png";
 import stockIcon from "./assets/stock.png";
 import editIcon from "./assets/edit.png";
 import trashIcon from "./assets/trash.png";
+import crossIcon from './assets/cross.png';
 
 const DEFAULT_INVESTMENTS = [
   {
+    id: 1,
     date: new Date(2025, 2, 14),
     type: "Stock",
     description: "NVIDIA",
     amount: "500",
   },
   {
+    id:2, 
     date: new Date(2025, 2, 14),
     type: "Crypto",
     description: "BITCOIN",
@@ -38,16 +41,23 @@ const MyWidget = () => {
     setInvestments((prevInvestments) => [...prevInvestments, newInvestment]);
   };
 
-  const handleDeleteInvestment = () => {
-    
+  const handleDeleteInvestment = (id) => {
+    setInvestments(investments.filter((investment) => investment.id !== id));
   };
+
+  const toggleEditMode = () => setIsEditMode(!isEditMode)
+
+  useEffect(() => {
+    const newTotal = investments.reduce((sum, investment) => sum + Number(investment.amount), 0);
+    setNetWorth(newTotal.toFixed(2));
+  }, [investments]);
 
   return (
     <div className="widget-container relative w-[30rem] bg-black px-[1rem] py-[1rem] rounded-xl border border-neutral-500 space-y-[1rem] shadow-2xl">
       {/* Main networth view */}
       <div className="flex flex-col justify-center items-center w-full bg-gradient-to-tr from-black via-gray-900 to-blue-900 shadow-2xl border-gray-900 border-[0.001px] rounded-xl p-6">
         <p className="text-sm font-extralight text-gray-300">Your Stack</p>
-        <p className="text-5xl font-medium text-neutral-100 mt-1">{`$${netWorth}`}</p>
+        <p className={`font-medium text-center text-neutral-100 mt-1 ${netWorth.length > 12 ? "text-2xl" : "text-5xl"}`}>{netWorth.length < 12 ? `$${netWorth}` : 'I am awed by your riches...'}</p>
 
         {/* Change buttons */}
         <div className="flex justify-center items-center w-full gap-10 text-neutral-50 mt-8">
@@ -119,11 +129,11 @@ const MyWidget = () => {
         <div className="flex justify-between items-center w-full">
           <p className="font-medium text-sm text-neutral-50">Portfolio</p>
           <button
-            onClick={() => setIsEditMode(true)}
+            onClick={() => toggleEditMode()}
             className="transition transform hover:scale-105 duration-150 ease-in-out cursor-pointer"
           >
             <img
-              src={editIcon}
+              src={isEditMode ? crossIcon : editIcon}
               alt="Edit icon"
               width={512}
               height={512}
@@ -133,9 +143,9 @@ const MyWidget = () => {
         </div>
 
         <div className="flex flex-col justify-center items-start w-full mt-3 gap-2">
-          {investments.map((investment, index) => (
+          {investments.map((investment) => (
             <div
-              key={index}
+              key={investment.id}
               className="flex justify-between items-center w-full text-white gap-5"
             >
               <div className="flex gap-5">
@@ -177,7 +187,7 @@ const MyWidget = () => {
               <div className="flex justify-center items-center gap-4">
                 <p>{`$${investment.amount}`}</p>
                 {isEditMode && (
-                  <button onClick={() => handleDeleteInvestment()} className="cursor-pointer">
+                  <button onClick={() => handleDeleteInvestment(investment.id)} className="cursor-pointer">
                     <img
                       src={trashIcon}
                       alt="Delete icon"
