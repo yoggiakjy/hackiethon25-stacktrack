@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import "./MyWidget.css";
-import InvestmentModal from "./components/InvestmentModal";
+import InvestmentModal from "./InvestmentModal";
 import bankIcon from "./assets/bank.png";
 import cryptoIcon from "./assets/crypto.png";
 import stockIcon from "./assets/stock.png";
 import editIcon from "./assets/edit.png";
 import trashIcon from "./assets/trash.png";
 import crossIcon from "./assets/cross.png";
+import useCryptoData from "./CryptoManager";
 
 const DEFAULT_INVESTMENTS = [
   {
@@ -19,11 +20,11 @@ const DEFAULT_INVESTMENTS = [
   },
   {
     id: 2,
-    entry: "BTC",
+    entry: "Bitcoin",
     date: new Date(2025, 2, 16),
     type: "Crypto",
-    description: "Bitcoin Investment",
-    amount: "1500",
+    equity: "200",
+    amount: "",
   },
   {
     id: 3,
@@ -41,6 +42,9 @@ const MyWidget = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [investmentType, setInvestmentType] = useState("");
   const [investments, setInvestments] = useState(DEFAULT_INVESTMENTS);
+  const { updatedInvestments } = useCryptoData(investments)
+  // const { updatedInvestments, isLoading } = useCryptoData(investments);
+  // console.log(updatedInvestments)
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleClick = (type) => {
@@ -58,6 +62,7 @@ const MyWidget = () => {
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
 
+  {/* Calculate the total value of investments (networth) */}
   useEffect(() => {
     const newTotal = investments.reduce(
       (sum, investment) => sum + Number(investment.amount),
@@ -68,15 +73,16 @@ const MyWidget = () => {
 
   return (
     <div className="widget-container relative w-[30rem] bg-black px-[1rem] py-[1rem] rounded-xl border border-neutral-500 space-y-[1rem] shadow-2xl">
+      
       {/* Main networth view */}
       <div className="flex flex-col justify-center items-center w-full bg-gradient-to-tr from-black via-gray-900 to-blue-900 shadow-2xl border-gray-900 border-[0.001px] rounded-xl p-6">
         <p className="text-sm font-extralight text-gray-300">Your Stack</p>
         <p
           className={`font-medium text-center text-neutral-100 mt-1 ${
-            netWorth.length > 12 ? "text-2xl" : "text-5xl"
+            netWorth.length > 14 ? "text-2xl" : "text-5xl"
           }`}
         >
-          {netWorth.length < 12
+          {netWorth.length < 14
             ? `$${netWorth}`
             : "I am awed by your riches..."}
         </p>
@@ -165,6 +171,7 @@ const MyWidget = () => {
         </div>
 
         <div className="flex flex-col justify-center items-start w-full mt-3 gap-2">
+          {/* {isLoading && <div>Loading prices...</div>} */}
           {investments.map((investment) => (
             <div
               key={investment.id}
@@ -264,7 +271,7 @@ const CryptoEntry = ({ investment }) => {
         </div>
 
         <p className="max-w-[50%] border-l border-white pl-3 text-sm font-light overflow-hidden">
-          {investment.description}
+          {investment.equity}
         </p>
       </div>
 
