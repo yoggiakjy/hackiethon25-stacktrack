@@ -58,10 +58,10 @@ const InvestmentModal = ({
 };
 
 const SavingsForm = ({ onClose, type, submitFunction }) => {
-  const [bank, setBank] = useState<string>("");
+  const [entry, setEntry] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
-  const [interest, setInterest] = useState<string>("");
+  const [rate, setRate] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,17 +69,19 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
     const newInvestment = {
       id: Date.now() + Math.random().toString(36).substring(2, 9),
       date: new Date(),
-      type,
-      description,
-      amount,
+      entry: entry,
+      type: type,
+      description: description,
+      amount: amount,
+      rate: rate,
     };
 
     submitFunction(newInvestment);
 
-    setBank("");
+    setEntry("");
     setDescription("");
     setAmount("");
-    setInterest("");
+    setRate("");
     onClose();
   };
 
@@ -95,8 +97,9 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
         <input
           name="bank"
           type="text"
-          value={bank}
-          onChange={(e) => setBank(e.target.value)}
+          value={entry}
+          maxLength={15}
+          onChange={(e) => setEntry(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>
@@ -108,6 +111,7 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
           name="description"
           type="text"
           value={description}
+          maxLength={25}
           onChange={(e) => setDescription(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
@@ -121,6 +125,7 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
           type="number"
           placeholder="$"
           value={amount}
+          step={0.01}
           onChange={(e) => setAmount(e.target.value)}
           min={0}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
@@ -134,8 +139,10 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
           name="interest"
           type="number"
           placeholder="%"
-          value={interest}
-          onChange={(e) => setInterest(e.target.value)}
+          value={rate}
+          min={0}
+          step={0.01}
+          onChange={(e) => setRate(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>
@@ -158,9 +165,8 @@ const SavingsForm = ({ onClose, type, submitFunction }) => {
 };
 
 const CryptoForm = ({ onClose, type, submitFunction }) => {
-  const [ticker, setTicker] = useState<string>("");
-  const [equity, setEquity] = useState<number>(0);
-  const [amount, setAmount] = useState<string>("");
+  const [entry, setEntry] = useState<string>("");
+  const [equity, setEquity] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -168,17 +174,16 @@ const CryptoForm = ({ onClose, type, submitFunction }) => {
     const newInvestment = {
       id: Date.now() + Math.random().toString(36).substring(2, 9),
       date: new Date(),
-      type,
-      ticker,
-      equity,
-      amount,
+      type: type,
+      entry: entry,
+      equity: equity,
+      amount: "",
     };
 
     submitFunction(newInvestment);
 
-    setTicker("");
-    setEquity(0);
-    setAmount("");
+    setEntry("");
+    setEquity("");
     onClose();
   };
 
@@ -189,14 +194,14 @@ const CryptoForm = ({ onClose, type, submitFunction }) => {
     >
       <div className="flex flex-row justify-between items-center w-full">
         <label className="text-sm w-[6rem] text-start text-gray-400">
-          Ticker
+          Coin Name
         </label>
         <input
-          name="ticker"
+          name="name"
           type="text"
           placeholder=""
-          value={ticker}
-          onChange={(e) => setTicker(e.target.value)}
+          value={entry}
+          onChange={(e) => setEntry(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>
@@ -208,20 +213,7 @@ const CryptoForm = ({ onClose, type, submitFunction }) => {
           name="equity"
           type="number"
           value={equity}
-          onChange={(e) => setEquity(Number(e.target.value))}
-          className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
-        />
-      </div>
-      <div className="flex flex-row justify-between items-center w-full">
-        <label className="text-sm w-[6rem] text-start text-gray-400">
-          Amount
-        </label>
-        <input
-          name="amount"
-          type="number"
-          placeholder="$"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setEquity(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>
@@ -244,9 +236,8 @@ const CryptoForm = ({ onClose, type, submitFunction }) => {
 };
 
 const StockForm = ({ onClose, type, submitFunction }) => {
-  const [ticker, setTicker] = useState<string>("");
-  const [equity, setEquity] = useState<number>();
-  const [amount, setAmount] = useState<string>("");
+  const [entry, setEntry] = useState<string>("");
+  const [equity, setEquity] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -255,16 +246,15 @@ const StockForm = ({ onClose, type, submitFunction }) => {
       id: Date.now() + Math.random().toString(36).substring(2, 9),
       date: new Date(),
       type,
-      ticker,
+      entry,
       equity,
-      amount,
+      amount: "",
     };
 
     submitFunction(newInvestment);
 
-    setTicker("");
-    setEquity(0);
-    setAmount("");
+    setEntry("");
+    setEquity("");
     onClose();
   };
 
@@ -281,8 +271,8 @@ const StockForm = ({ onClose, type, submitFunction }) => {
           name="ticker"
           type="text"
           placeholder=""
-          value={ticker}
-          onChange={(e) => setTicker(e.target.value)}
+          value={entry}
+          onChange={(e) => setEntry(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>
@@ -294,20 +284,7 @@ const StockForm = ({ onClose, type, submitFunction }) => {
           name="equity"
           type="number"
           value={equity}
-          onChange={(e) => setEquity(Number(e.target.value))}
-          className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
-        />
-      </div>
-      <div className="flex flex-row justify-between items-center w-full">
-        <label className="text-sm w-[6rem] text-start text-gray-400">
-          Amount
-        </label>
-        <input
-          name="amount"
-          type="number"
-          placeholder="$"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setEquity(e.target.value)}
           className="border-[0.01px] border-gray-500 rounded-lg pl-3 py-1.5"
         />
       </div>

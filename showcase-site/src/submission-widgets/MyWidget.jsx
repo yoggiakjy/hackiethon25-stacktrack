@@ -7,7 +7,7 @@ import stockIcon from "./assets/stock.png";
 import editIcon from "./assets/edit.png";
 import trashIcon from "./assets/trash.png";
 import crossIcon from "./assets/cross.png";
-import useCryptoData from "./CryptoManager";
+import usePriceManager from "./PriceManager";
 
 const DEFAULT_INVESTMENTS = [
   {
@@ -15,21 +15,21 @@ const DEFAULT_INVESTMENTS = [
     entry: "VOO",
     date: new Date(2025, 2, 14),
     type: "Stock",
-    description: "ETF Investment",
-    amount: "500",
+    equity: "1.3",
+    amount: "",
   },
   {
     id: 2,
-    entry: "Bitcoin",
     date: new Date(2025, 2, 16),
     type: "Crypto",
-    equity: "200",
+    entry: "Bitcoin",
+    equity: "1.2",
     amount: "",
   },
   {
     id: 3,
-    entry: "SAVINGS",
     date: new Date(2025, 3, 11),
+    entry: "Westpac Savings",
     type: "Savings",
     description: "Wage from job",
     amount: "11000",
@@ -37,15 +37,15 @@ const DEFAULT_INVESTMENTS = [
   },
 ];
 
+const MAX_NETWORTH_LEN = 14;
+
 const MyWidget = () => {
-  const [netWorth, setNetWorth] = useState("1000");
+  const [netWorth, setNetWorth] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [investmentType, setInvestmentType] = useState("");
   const [investments, setInvestments] = useState(DEFAULT_INVESTMENTS);
-  const { updatedInvestments } = useCryptoData(investments)
-  // const { updatedInvestments, isLoading } = useCryptoData(investments);
-  // console.log(updatedInvestments)
   const [isEditMode, setIsEditMode] = useState(false);
+  const [updatedInvestments, isLoading] = usePriceManager(investments);
 
   const handleClick = (type) => {
     setInvestmentType(type);
@@ -57,32 +57,37 @@ const MyWidget = () => {
   };
 
   const handleDeleteInvestment = (id) => {
-    setInvestments(investments.filter((investment) => investment.id !== id));
+    setInvestments(
+      updatedInvestments.filter((investment) => investment.id !== id)
+    );
   };
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
 
-  {/* Calculate the total value of investments (networth) */}
+  {
+    /* Calculate the total value of investments (networth) */
+  }
   useEffect(() => {
-    const newTotal = investments.reduce(
+    const newTotal = updatedInvestments.reduce(
       (sum, investment) => sum + Number(investment.amount),
       0
     );
-    setNetWorth(newTotal.toFixed(2));
-  }, [investments]);
+    const formattedTotal = Intl.NumberFormat("en-US", { maximumFractionDigits: 2}).format(newTotal);
+    
+    setNetWorth(formattedTotal);
+  }, [updatedInvestments]);
 
   return (
     <div className="widget-container relative w-[30rem] bg-black px-[1rem] py-[1rem] rounded-xl border border-neutral-500 space-y-[1rem] shadow-2xl">
-      
       {/* Main networth view */}
       <div className="flex flex-col justify-center items-center w-full bg-gradient-to-tr from-black via-gray-900 to-blue-900 shadow-2xl border-gray-900 border-[0.001px] rounded-xl p-6">
         <p className="text-sm font-extralight text-gray-300">Your Stack</p>
         <p
           className={`font-medium text-center text-neutral-100 mt-1 ${
-            netWorth.length > 14 ? "text-2xl" : "text-5xl"
+            netWorth.length > MAX_NETWORTH_LEN ? "text-2xl" : "text-5xl"
           }`}
         >
-          {netWorth.length < 14
+          {netWorth.length < MAX_NETWORTH_LEN
             ? `$${netWorth}`
             : "I am awed by your riches..."}
         </p>
@@ -153,8 +158,8 @@ const MyWidget = () => {
       </div>
 
       {/* Portfolio list view */}
-      <div className="flex flex-col justify-center items-center w-full">
-        <div className="flex justify-between items-center w-full">
+      <div className="flex flex-col w-full">
+        <div className="flex justify-between items-start w-full">
           <p className="font-medium text-sm text-neutral-50">Portfolio</p>
           <button
             onClick={() => toggleEditMode()}
@@ -170,41 +175,44 @@ const MyWidget = () => {
           </button>
         </div>
 
-        <div className="flex flex-col justify-center items-start w-full mt-3 gap-2">
-          {/* {isLoading && <div>Loading prices...</div>} */}
-          {investments.map((investment) => (
-            <div
-              key={investment.id}
-              className="flex justify-between items-center w-full text-white"
-            >
-              {investment.type === "Savings" && (
-                <SavingsEntry investment={investment} />
-              )}
-              {investment.type === "Crypto" && (
-                <CryptoEntry investment={investment} />
-              )}
-              {investment.type === "Stock" && (
-                <StockEntry investment={investment} />
-              )}
-
-              <div className="flex justify-center items-center">
-                {isEditMode && (
-                  <button
-                    onClick={() => handleDeleteInvestment(investment.id)}
-                    className="cursor-pointer ml-3"
-                  >
-                    <img
-                      src={trashIcon}
-                      alt="Delete icon"
-                      width={512}
-                      height={512}
-                      className="w-[20px]"
-                    />
-                  </button>
+        <div className="max-h-[15rem] flex flex-col justify-center items-start w-full mt-3 gap-2 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent px-3 pt-3 scrollbar-minimal">
+          {isLoading ? (
+            <div>Loading your stack...</div>
+          ) : (
+            updatedInvestments.map((investment) => (
+              <div
+                key={investment.id}
+                className="flex justify-between items-center w-full text-white"
+              >
+                {investment.type === "Savings" && (
+                  <SavingsEntry investment={investment} />
                 )}
+                {investment.type === "Crypto" && (
+                  <CryptoEntry investment={investment} />
+                )}
+                {investment.type === "Stock" && (
+                  <StockEntry investment={investment} />
+                )}
+
+                <div className="flex justify-center items-center">
+                  {isEditMode && (
+                    <button
+                      onClick={() => handleDeleteInvestment(investment.id)}
+                      className="cursor-pointer ml-3"
+                    >
+                      <img
+                        src={trashIcon}
+                        alt="Delete icon"
+                        width={512}
+                        height={512}
+                        className="w-[20px]"
+                      />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
@@ -231,17 +239,26 @@ const SavingsEntry = ({ investment }) => {
           <p className="text-xs font-light text-stone-400">
             {investment.date.toLocaleDateString()}
           </p>
-          <p className="">{investment.entry}</p>
+          <p
+            className={
+              investment.description ? "max-w-[4.5rem] break-words" : ""
+            }
+          >
+            {investment.entry}
+          </p>
         </div>
 
         <p className="max-w-[50%] border-l border-white pl-3 text-sm font-light overflow-hidden">
           {investment.description}
         </p>
       </div>
-
-      <div className="flex flex-col justify-start items-center">
-        <p className="text-xs font-light text-stone-400">{`${investment.rate}% p.a`}</p>
-        <p>{`$${investment.amount}`}</p>
+      
+      <div className="flex flex-col justify-center items-end">
+        <p className="text-end text-xs font-light text-stone-400">
+          {investment.rate ? `${investment.rate}% p.a` : ""}
+        </p>
+        <p>{`$${Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+        Number(investment.amount))}`}</p>
       </div>
     </div>
   );
@@ -267,16 +284,17 @@ const CryptoEntry = ({ investment }) => {
           <p className="text-xs font-light text-stone-400">
             {investment.date.toLocaleDateString()}
           </p>
-          <p className="">{investment.entry}</p>
+          <p className="max-w-[4.5rem]">{investment.entry}</p>
         </div>
 
         <p className="max-w-[50%] border-l border-white pl-3 text-sm font-light overflow-hidden">
-          {investment.equity}
+          {`${investment.equity} coins`}
         </p>
       </div>
 
       <div className="flex flex-col justify-start items-center">
-        <p>{`$${investment.amount}`}</p>
+        <p>{`$${Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+        Number(investment.amount))}`}</p>
       </div>
     </div>
   );
@@ -302,16 +320,17 @@ const StockEntry = ({ investment }) => {
           <p className="text-xs font-light text-stone-400">
             {investment.date.toLocaleDateString()}
           </p>
-          <p className="">{investment.entry}</p>
+          <p className="max-w-[4.5rem] break-words">{investment.entry}</p>
         </div>
 
         <p className="max-w-[50%] border-l border-white pl-3 text-sm font-light overflow-hidden">
-          {investment.description}
+          {`${investment.equity} shares`}
         </p>
       </div>
 
       <div className="flex flex-col justify-start items-center">
-        <p>{`$${investment.amount}`}</p>
+        <p>{`$${Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+        Number(investment.amount))}`}</p>
       </div>
     </div>
   );
